@@ -9,16 +9,16 @@ LABEL version="0.1"
 LABEL description="Docker desktop"
 #
 # copy what we need
-COPY app /app
+COPY Docker-build.sh /
+COPY Docker-entrypoint.sh /
 #
 # all deploy inteligence lives at this script
-RUN ["/bin/bash", "/app/docker/build.sh"]
+RUN ["/bin/bash", "/Docker-build.sh"]
 #
 #VOLUME [ "/etc" ]
 #
 # expose ports
-EXPOSE 6080
+EXPOSE 22
 #
 # start all the magic
-ENTRYPOINT ["/app/docker/entrypoint.sh"]
-
+ENTRYPOINT ["/Docker-entrypoint.sh"]
