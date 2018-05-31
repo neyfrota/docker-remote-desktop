@@ -1,24 +1,24 @@
-#
+
 # we like ubuntu :)
-# https://github.com/phusion/baseimage-docker
+# ...but can try https://github.com/phusion/baseimage-docker
 FROM ubuntu:16.04
-#
-# our ID
+
+# about us
 MAINTAINER NEYFROTA <ney@frota.net>
 LABEL version="0.1"
 LABEL description="Docker desktop"
-#
-# copy what we need
-COPY Docker-build.sh /
-COPY Docker-entrypoint.sh /
-#
-# all deploy inteligence lives at this script
-RUN ["/bin/bash", "/Docker-build.sh"]
-#
-#VOLUME [ "/etc" ]
-#
+
+# copy our files
+COPY Dockerfiles /Dockerfiles
+
+# build
+RUN ["/bin/bash", "/Dockerfiles/build.sh"]
+
+# define volumes
+#VOLUME [ "/home" ]
+
 # expose ports
 EXPOSE 22
-#
+
 # start all the magic
-ENTRYPOINT ["/Docker-entrypoint.sh"]
+ENTRYPOINT ["/Dockerfiles/entrypoint.sh"]

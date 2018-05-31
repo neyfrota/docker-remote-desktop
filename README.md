@@ -17,18 +17,21 @@ docker build -t docker-desktop .
 
 ```
 docker run -d \
-  -e "username=neyfrota" \
-	-e "password=password" \
-	-v /tmp/remote-user-neyfrota:/home/neyfrota \
-	-p 22:22 \
-	docker-desktop
+-e "UID=1000" \
+-e "GUI=1000" \
+-e "username=user" \
+-e "password=password" \
+-e "resolution=800x600" \
+-v /tmp/docker-desktop-home:/home \
+-p 22:22 \
+docker-desktop
 ```
 
 ## env variables
 
-* UID: unix user numeric id (default 1000)
-* GID: unix group numeric id (default 1000)
-* group: unix group name (default user)
-* username: unix user name (default user)
-* password: unix user password (default password)
+* UID: container unix user numeric id (default 1000)
+* GID: container unix group numeric id (default 1000)
+* group: container unix group name (default user)
+* username: container unix user name (default user)
+* password: container unix user password (default password)
 * resolution: vnc geometry (default 1024x768)
