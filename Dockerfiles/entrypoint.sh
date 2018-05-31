@@ -8,8 +8,8 @@ echo "==============================================="
 # -----------------------
 # Cleanup env variables
 # -----------------------
-export UID=${UID:=1000}
-export GID=${GID:=1000}
+export uid=${uid:-1000}
+export gid=${gid:-1000}
 export group=${group:=user}
 export username=${username:=user}
 export password=${password:=password}
@@ -21,11 +21,12 @@ export resolution=${resolution:=1024x768}
 # -----------------------
 # add user
 # -----------------------
-echo "Create user $username:$password ($UID)"
-echo "Create group $group ($GID)"
-groupadd --gid $GID $group
-useradd --home-dir /home/$username --no-create-home --non-unique --gid $GID --uid $UID --no-user-group --shell /bin/bash $username
+echo "Create user $username:$password ($uid)"
+echo "Create group $group ($gid)"
+groupadd --gid $gid $group
+useradd --home-dir /home/$username --no-create-home --non-unique --gid $gid --uid $uid --no-user-group --shell /bin/bash $username
 chpasswd <<<"$username:$password"
+export password=""
 usermod -aG sudo $username
 mkdir -p /home/$username
 mkdir -p /home/$username/Desktop
