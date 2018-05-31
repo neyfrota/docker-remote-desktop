@@ -1,23 +1,23 @@
-# docker desktop
+# docker remote desktop
 
 My effort to create a simple remote desktop packed as docker container
 
 ![Screenshot](screenshot.png "Screenshot")
 
-* public access only over SSH
+* public access only over SSH 
 * VNC server (local only. need ssh tunnel to access)
 * Container user defined by env variables (uid, group, username, password)
 * simple desktop to fast remote desktop
 
 ## build
 ```
-docker build -t docker-desktop .
+docker build -t neyfrota/remote-desktop .
 ```
 
 ## run
 
 ```
-docker run -d -p 22:22 docker-desktop
+docker run -d -p 22:22 neyfrota/remote-desktop
 ```
 
 ## ssh connect
@@ -58,5 +58,5 @@ docker run -d \
 -e "resolution=800x600" \
 -v /tmp/docker-desktop-home:/home \
 -p 22:22 \
-docker-desktop
+neyfrota/remote-desktop
 ```
