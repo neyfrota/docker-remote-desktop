@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "==============================================="
-echo "Start docker desktop"
+echo "docker entrypoint"
 echo "==============================================="
 
 
@@ -31,10 +31,12 @@ usermod -aG sudo $username
 mkdir -p /home/$username
 mkdir -p /home/$username/Desktop
 mkdir -p /home/$username/.ssh
-chown $username.$group  /home/$username/
-chown $username.$group  /home/$username/Desktop
+mkdir -p /home/$username/.config
+chown -f $username.$group  /home/$username/
+chown -f $username.$group  /home/$username/Desktop
 chown -Rf $username.$group  /home/$username/.ssh
-if [[ -d /home/$username/.config ]]
+chown -f $username.$group  /home/$username/.config
+if [[ -e /home/$username/.config/dconf.dump ]]
 then
 	echo "Accept user config"
 	rm -f /home/$username/.config/dconf.dump
@@ -42,10 +44,8 @@ then
 	chown -Rf $username.$group  /home/$username/.config/dconf.dump
 else
 	echo "Create user config"
-	mkdir -p /home/$username/.config
-	chown -f $username.$group  /home/$username/.config
 	rm -f /home/$username/.config/dconf.dump
-	cp /Dockerfiles/user.dconf.dump /home/$username/.config/dconf.dump
+	cp /Dockerfiles/dconf.dump /home/$username/.config/dconf.dump
 	chown -Rf $username.$group  /home/$username/.config/dconf.dump
 fi
 
@@ -94,7 +94,7 @@ echo "Start ssh at port 22"
 # -----------------------
 # stay up
 # -----------------------
-echo "Holding instance up for debug."
+echo "Holding instance up."
 while :; do
   date
   sleep 300
