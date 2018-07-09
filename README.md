@@ -2,7 +2,7 @@
 
 My effort to create a simple remote desktop packed as docker container
 
-![Screenshot](screenshot.png "Screenshot")
+![Screenshot](screenshot.jpg "Screenshot")
 
 * Public access only over SSH (safe and secure)
 * Local [VNC](https://en.wikipedia.org/wiki/Virtual_Network_Computing) server (need ssh tunnel to access)
