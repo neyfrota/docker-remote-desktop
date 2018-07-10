@@ -11,44 +11,47 @@ My effort to create a simple remote desktop packed as docker container
 * Free [Resilio sync](https://www.resilio.com/individuals/) (local UI at http://127.0.0.1:8888)
 * Container user defined by env variables (uid, group, username, password)
 
-## run
+# Start
 
 Use docker hub public image. Git pull this repo is not need.  
 ```
 docker run -d -p 22:22 neyfrota/remote-desktop
 ```
 
-## ssh connect
+# SSH connect
 
 ```
-ssh user@127.0.0.1
+ssh user@localhost
 ```
 
-## vnc connect
+# VNC connect
 
-SSH connect with port forward at 5900. Leave this connection active.
+VNC is not public available. We need SSH tunnel and port forward VNC traffic.
+
+This increase setup complexity but guarantee a safe and protected VNC connection
+
+### linux command line
+
+This command connect to ssh, create a tunnel, launch vnc viewer and then disconnect SSH at end of VNC connection.
+
 ```
-ssh -L5900:127.0.0.1:5900 user@localhost
+ssh -f -o ExitOnForwardFailure=yes -L5900:127.0.0.1:5900 user@localhost sleep 10 && gvncviewer 127.0.0.1
 ```
-Connect vnc viewer local (port 5900 is default)
-```
-gvncviewer 127.0.0.1
-```
-(todo: research vnc apps with included ssh port forward for android/ios)
+_(replace user and localhost with host you want connect)_
 
+### to do
 
-## env variables
+(research vnc apps with ssh port forward for android/ios/win/osx)
 
-* uid: container unix user numeric id (default 1000)
-* gid: container unix group numeric id (default 1000)
-* group: container unix group name (default user)
-* username: container unix user name (default user)
-* password: container unix user password (default password)
-* resolution: vnc geometry (default 1024x768)
+# Persistence
 
-## examples
+By default, instance data are ephemeral. 
+This is a feature, not a bug.
+We need some actions to persist user files and user password across usage.
 
-Define custom user and set home folder at host for data persistence.
+### files persistence 
+
+We can mount user home at host for data persistence.
 ```
 docker run -d \
 -e "username=customuser" \
@@ -57,6 +60,23 @@ docker run -d \
 -p 22:22 \
 neyfrota/remote-desktop
 ```
+
+### password persistence 
+
+(todo)
+
+# Details
+
+### env variables
+
+* uid: container unix user numeric id (default 1000)
+* gid: container unix group numeric id (default 1000)
+* group: container unix group name (default user)
+* username: container unix user name (default user)
+* password: container unix user password (default password)
+* resolution: vnc geometry (default 1024x768)
+
+### examples
 
 A full usage example
 ```
@@ -71,7 +91,7 @@ docker run -d \
 neyfrota/remote-desktop
 ```
 
-## local build
+### local build
 
 If need, you can download this repo, review code and build local
 
