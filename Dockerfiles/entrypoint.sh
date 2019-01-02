@@ -3,27 +3,26 @@ echo "==============================================="
 echo "docker entrypoint"
 echo "==============================================="
 
+env >/tmp/env.out
 
 echo "Set variables"
 export uid=${uid:-1000}
 export gid=${gid:-1000}
 export group=${group:=user}
 export username=${username:=user}
-export password=${password:=password}
 export resolution=${resolution:=1024x768}
 # todo: validate env to avoid hack
 
 
-echo "Create user $username:$password ($uid)"
+echo "Create user $username ($uid)"
 echo "Create group $group ($gid)"
 groupadd --gid $gid $group
 useradd --home-dir /home/$username --no-create-home --non-unique --gid $gid --uid $uid --no-user-group --shell /bin/bash $username
-chpasswd <<<"$username:$password"
-export password=""
+#chpasswd <<<"$username:$password"
+#export password=""
 usermod -aG sudo $username
 mkdir -p /home/$username
 mkdir -p /home/$username/Desktop
-mkdir -p /home/$username/.ssh
 mkdir -p /home/$username/.config
 chown -f $username.$group  /home/$username/
 chown -f $username.$group  /home/$username/Desktop
@@ -41,6 +40,19 @@ else
 	cp /Dockerfiles/dconf.dump /home/$username/.config/dconf.dump
 	chown -Rf $username.$group  /home/$username/.config/dconf.dump
 fi
+
+
+mkdir -p /home/$username/.ssh
+touch /home/$username/.ssh/authorized_keys
+if [[ -z "${pubkey}" ]]; then
+	echo "No pubkey specified. I hope is already set"
+else
+	echo "Use pubkey from env variables"
+	grep -qF -- "$pubkey" "/home/$username/.ssh/authorized_keys" || echo "$pubkey" >> "/home/$username/.ssh/authorized_keys"
+
+fi
+chown -Rf $username.$group  /home/$username/.ssh
+chmod -Rf a-rwx,u+rX  /home/$username/.ssh
 
 
 echo "Start local vnc with resolution $resolution"
