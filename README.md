@@ -4,7 +4,7 @@ My effort to create a simple remote desktop packed as docker container
 
 ![Screenshot](screenshot.jpg "Screenshot")
 
-* Public access only over SSH (password less only by ssh key. safe and secure)
+* Public access only over SSH only by ssh key (safe and secure)
 * Local [VNC](https://en.wikipedia.org/wiki/Virtual_Network_Computing) server (need ssh tunnel to access)
 * Simple [Mate desktop](https://mate-desktop.org/) for fast remote access
 * My basic apps of choice(firefox, nicotine, transmission, baobab, vlc, etc)
@@ -15,7 +15,7 @@ My effort to create a simple remote desktop packed as docker container
 
 This is a local test to check remote desktop.
 No need git pull this repo. Use docker hub public image.
-You need setup [passwordless SSH login](https://scotch.io/tutorials/how-to-setup-ssh-public-key-authentication) to get your pubkey value.
+You need setup [passwordless SSH login](https://scotch.io/tutorials/how-to-setup-ssh-public-key-authentication) to get your ssh keys.
 
 Start server using the ssh public key from your active user.
 
@@ -32,7 +32,7 @@ Exit previous connection and start a new one with VNC port forward.
 
 ```ssh -L5900:127.0.0.1:5900 user@localhost```
 
-Now open VNC client and connect to localhost. No VNC password is need becuase we are already protected by ssh
+Now open VNC client and connect to localhost. No VNC password need becuase we are already protected by ssh
 
 ```gvncviewer localhost```
 
