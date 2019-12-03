@@ -53,6 +53,7 @@ else
 fi
 chown -Rf $username.$group  /home/$username/.ssh
 chmod -Rf a-rwx,u+rX  /home/$username/.ssh
+chmod -Rf a-rwx,u+rX  /home/$username/.ssh/authorized_keys
 
 
 echo "Start local vnc with resolution $resolution"

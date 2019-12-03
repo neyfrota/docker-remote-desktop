@@ -178,7 +178,7 @@ if [ $1 == "start" ]; then
 	if [ -z $active_id ]; then
 		echo "No running instance, Lets start"
 		cd ..
-		docker run -d -e "development=true" -p 22:22 -e "pubkey=$(cat ~/.ssh/id_rsa.pub)" -v /tmp/home/user:/home/user docker-remote-desktop
+		docker run -d -e "development=true" -p 22:22 -e "pubkey=$(cat ~/.ssh/id_rsa.pub)" -v /tmp/home:/home neyfrota/docker-remote-desktop
 		set_active_instance_id
 		if [ -z $active_id ]; then
 			echo "Fail start. No running instance"
