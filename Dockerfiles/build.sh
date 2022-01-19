@@ -22,12 +22,8 @@ echo "Update"
 apt-get update -y
 
 echo "Install packages"
-apt-get install -y vnc4server mate-desktop-environment firefox resilio-sync nicotine transmission baobab vlc 
+apt-get install -y vnc4server mate-desktop-environment firefox nicotine transmission baobab vlc
 # this one fail :(  atom pinta
-
-echo "Post-install actions"
-sudo systemctl stop resilio-sync
-sudo systemctl disable resilio-sync
 
 echo "Clean system"
 apt-get autoremove -y
