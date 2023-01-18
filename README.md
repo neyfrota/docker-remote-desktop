@@ -1,6 +1,12 @@
 # Docker remote desktop 
 
+> ### This project is deprecated
+> I just move my system to a dual CPU machine with proxmox at bare-metal. Now my linux-desktop-tools are real VMs. I do not need a remote desktop in docker format
+
 My effort to create a simple remote desktop packed as docker container
+
+
+
 
 ![Screenshot](screenshot.jpg "Screenshot")
 
